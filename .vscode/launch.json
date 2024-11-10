@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "API DEV",
+            "request": "launch",
+            "command": "npm run start",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
+  
