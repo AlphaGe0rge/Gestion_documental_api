@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getRootFolders, getFolderContents, createFolder, uploadDocument, downloadDocument, deleteDocument } = require('../controllers/document');
+const { getRootFolders, getFolderContents, createFolder, uploadDocument, downloadDocument, deleteDocument, deleteFolder } = require('../controllers/document');
 const multer = require('multer');
 const path = require('path');
 
@@ -27,5 +27,6 @@ router.post('/create-folder', createFolder);
 router.post('/upload', multerUpload.single('file'), uploadDocument);
 router.get('/download/:id', downloadDocument);
 router.delete('/delete/:id', deleteDocument);
+router.delete('/delete-folder/:id', deleteFolder);
 
 module.exports = router;

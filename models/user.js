@@ -1,6 +1,5 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 const db = require("../db/connection");
-const Role = require("./role");
 
 const User = db.define('User', {
     userId: {
@@ -10,7 +9,6 @@ const User = db.define('User', {
     },
     fullName: {
         type: DataTypes.STRING, 
-        unique: true, 
         allowNull: false 
     },
     userName: { 
@@ -22,13 +20,13 @@ const User = db.define('User', {
         type: DataTypes.STRING, 
         allowNull: false 
     },
-    roleId: { 
-        type: DataTypes.UUID,
-        references: {
-          model: Role,  // Hace referencia a la tabla Roles
-          key: 'roleId'
-        },
+    role: { 
+        type: Sequelize.ENUM('admin', 'lawyer'),
         allowNull: false
+    },
+    status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true 
     }
 }, 
 {

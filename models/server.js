@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 
-const Role = require('./role');
 const User = require('./user');
 const Case = require('./case');
 const Document = require('./document');
@@ -23,6 +22,8 @@ class Server {
         this.authPath = '/api/auth';
         this.casePath = '/api/cases';
         this.rolePath = '/api/roles';
+        this.userPath = '/api/users';
+        this.validationsPath = '/api/validations';
 
         //conexión a la base de datos
         this.dbConnection();
@@ -70,7 +71,8 @@ class Server {
         this.app.use(this.documentPath, require('../routes/document'));
         this.app.use(this.authPath, require('../routes/auth'));
         this.app.use(this.casePath, require('../routes/case'));
-        this.app.use(this.rolePath, require('../routes/role'));
+        this.app.use(this.userPath, require('../routes/user'));
+        this.app.use(this.validationsPath, require('../routes/validations'));
     }
 
     listen() {

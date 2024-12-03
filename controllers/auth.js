@@ -16,7 +16,7 @@ register = async (req, res) => {
       fullName: req.body.fullName,
       userName: req.body.userName,
       password: hashedPassword,
-      roleId: req.body.roleId // Asignar rol
+      role: req.body.role 
     });
 
     res.status(201).json({ message: 'Usuario registrado con éxito' });

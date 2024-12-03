@@ -3,14 +3,7 @@ const Document = require("./document");
 // const DocumentCategory = require("./documentCategory");
 const Folder = require("./folder");
 // const Permission = require("./permission");
-const Role = require("./role");
-// const RolePermission = require("./rolePermission");
 const User = require("./user");
-
-
-// Relación Role -> User (Un rol tiene muchos usuarios)
-Role.hasMany(User, { foreignKey: 'roleId' });
-User.belongsTo(Role, { foreignKey: 'roleId' });
 
 // Relación User -> Case (Un usuario tiene muchos casos)
 User.hasMany(Case, { foreignKey: 'userId' });
