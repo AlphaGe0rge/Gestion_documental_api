@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const Case = require("../models/case");
 const Document = require("../models/document");
 
@@ -26,10 +27,27 @@ createCase = async (req, res) => {
 // Obtener todos los casos
 getAllCases = async (req, res) => {
 
+  const {
+    dateFrom = null,
+    dateTo = null,
+    title = null,
+    status = null,
+    userId = null
+  } = req.body;
+
   try {
 
+    let where = {};
+
+    if (dateFrom && dateTo) where.createdAt = { [Op.between]: [dateFrom, dateTo] };
+    if (title) where.title = { [Op.like]: `%${title}%` };
+    if (typeof status === 'boolean') where.status = status;
+    if (userId) where.userId = userId;
+
     const cases = await Case.findAll({
-      include: [{ model: Document }]
+      where,
+      include: [{ model: Document }],
+      order: ['title']
     });
 
     res.status(200).json(cases);

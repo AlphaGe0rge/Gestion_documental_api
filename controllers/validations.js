@@ -1,6 +1,7 @@
 const User = require("../models/user");
+const bcryptjs = require("bcryptjs");
 
-checkUserName = async (req, res = response) => {
+const checkUserName = async (req, res = response) => {
 
     const {userName} = req.body
 
@@ -22,6 +23,33 @@ checkUserName = async (req, res = response) => {
     }
 }
 
+const checkPassword = async (req, res = response) => {
+
+  const {password, userId} = req.body
+
+  try {
+
+      const user = await User.findOne({ where: {userId} });
+  
+      if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+  
+      const isPasswordValid = await bcryptjs.compare(password, user.password);
+  
+      if (!isPasswordValid) {
+        return res.status(200).json(true);
+      } else {
+        return res.status(200).json(false);
+      }
+      
+  } catch (err) {
+
+      console.error('Error al validar el passsword:', err);
+      res.status(500).json({ message: 'Error al validar el password' });
+
+  }
+}
+
 module.exports = {
-    checkUserName
+    checkUserName,
+    checkPassword
 }

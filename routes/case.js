@@ -9,7 +9,7 @@ const { createCase, getAllCases, getCaseById, updateCase, deleteCase } = require
 // router.delete('/:id', authMiddleware, roleMiddleware(['abogado']), caseController.deleteCase);
 
 router.post('/', createCase);
-router.get('/', getAllCases);
+router.post('/casesGet', getAllCases);
 router.get('/:id', getCaseById);
 router.put('/:id', updateCase);
 router.delete('/:id', deleteCase);

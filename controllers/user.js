@@ -28,8 +28,8 @@ const usersGet = async (req, res = response) => {
 
         const {where = {}} = req.body;
 
-        if (where.userName) where.userName = {[Op.like] : `%${where.userName}%`}
-        if (where.fullName) where.fullName = {[Op.like] : `%${where.fullName}%`}
+        if (where.userName) where.userName = {[Op.like] : `%${where.userName}%`};
+        if (where.fullName) where.fullName = {[Op.like] : `%${where.fullName}%`};
 
         const users = await User.findAll({
             where

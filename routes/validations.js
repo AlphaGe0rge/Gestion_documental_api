@@ -1,8 +1,9 @@
 const {Router} = require('express');
-const { checkCedula, checkEmail, checkUserName } = require('../controllers/validations');
+const { checkUserName, checkPassword } = require('../controllers/validations');
 
 const router = Router();
 
 router.post('/checkUserName', checkUserName);
+router.post('/checkPassword', checkPassword)
 
 module.exports = router;
