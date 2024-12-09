@@ -3,7 +3,7 @@ const Case = require("../models/case");
 const Document = require("../models/document");
 
 // Crear un nuevo caso
-createCase = async (req, res) => {
+const createCase = async (req, res) => {
 
   try {
 
@@ -25,7 +25,7 @@ createCase = async (req, res) => {
 };
 
 // Obtener todos los casos
-getAllCases = async (req, res) => {
+const getAllCases = async (req, res) => {
 
   const {
     dateFrom = null,
@@ -57,26 +57,8 @@ getAllCases = async (req, res) => {
   }
 };
 
-// Obtener un caso por ID
-getCaseById = async (req, res) => {
-
-  try {
-
-    const caseDetail = await Case.findByPk(req.params.id, {
-      include: [{ model: Document }]
-    });
-
-    if (!caseDetail) return res.status(404).json({ error: 'Caso no encontrado' });
-
-    res.status(200).json(caseDetail);
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 // Actualizar un caso
-updateCase = async (req, res) => {
+const updateCase = async (req, res) => {
 
   try {
 
@@ -93,8 +75,37 @@ updateCase = async (req, res) => {
   }
 };
 
+const updateStatusCase = async (req, res) => {
+
+  const {items} = req.body
+
+  try {
+
+    for (const o of items) {
+
+      await Case.update(
+        {
+          status: (o.status === 'activo') ? false : true 
+        },
+        {
+          where: {
+            caseId: o.caseId
+          }
+        }
+      );
+      
+    }
+
+    res.status(200).json({msg: 'Estado cambiado'});
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 // Eliminar un caso
-deleteCase = async (req, res) => {
+const deleteCase = async (req, res) => {
 
   try {
 
@@ -115,6 +126,6 @@ module.exports = {
     deleteCase,
     createCase,
     getAllCases,
-    getCaseById,
-    updateCase
+    updateCase,
+    updateStatusCase
 }

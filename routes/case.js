@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createCase, getAllCases, getCaseById, updateCase, deleteCase } = require('../controllers/case');
+const { createCase, getAllCases, updateCase, deleteCase, updateStatusCase } = require('../controllers/case');
 
 // router.post('/', authMiddleware, caseController.createCase);
 // router.get('/', authMiddleware, caseController.getAllCases);
@@ -10,8 +10,8 @@ const { createCase, getAllCases, getCaseById, updateCase, deleteCase } = require
 
 router.post('/', createCase);
 router.post('/casesGet', getAllCases);
-router.get('/:id', getCaseById);
 router.put('/:id', updateCase);
+router.put('/', updateStatusCase);
 router.delete('/:id', deleteCase);
 
 module.exports = router;
