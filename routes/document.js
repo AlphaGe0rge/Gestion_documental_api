@@ -3,6 +3,7 @@ const router = express.Router();
 const { getRootFolders, getFolderContents, createFolder, uploadDocument, downloadDocument, deleteDocument, deleteFolder } = require('../controllers/document');
 const multer = require('multer');
 const path = require('path');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 const multerUpload = multer({
     storage: multer.diskStorage({
@@ -20,6 +21,8 @@ const multerUpload = multer({
 })
 
 console.log(path.join(__dirname, '../uploads'));
+
+router.use(validarJWT);
 
 router.get('/root/:caseId', getRootFolders);
 router.get('/folder/:folderId', getFolderContents);

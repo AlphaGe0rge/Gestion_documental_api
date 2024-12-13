@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 const validarJWT = async( req = request, res = response, next ) => {
 
-    const token = req.header('x-token');
+    const token = req.header('token');
 
     if ( !token ) {
         return res.status(401).json({
@@ -14,10 +14,10 @@ const validarJWT = async( req = request, res = response, next ) => {
 
     try {
         
-        const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY );
+        const { id } = jwt.verify( token, process.env.SECRETORPRIVATEKEY );
 
         // leer el usuario que corresponde al uid
-        const usuario = await User.findById( uid );
+        const usuario = await User.findByPk(id);
 
         if( !usuario ) {
             return res.status(401).json({
@@ -26,7 +26,7 @@ const validarJWT = async( req = request, res = response, next ) => {
         }
 
         // Verificar si el uid tiene estado true
-        if ( !usuario.estado ) {
+        if ( !usuario.status ) {
             return res.status(401).json({
                 msg: 'Token no válido - usuario con estado: false'
             })

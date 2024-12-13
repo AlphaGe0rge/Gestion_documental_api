@@ -35,11 +35,13 @@ login = async (req, res) => {
 
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
 
+    if (!user.status) return res.status(401).json({ error: 'Usuario inactivo' });
+
     const isPasswordValid = await bcryptjs.compare(req.body.password, user.password);
 
     if (!isPasswordValid) return res.status(401).json({ error: 'Contraseña incorrecta' });
 
-    const token = jwt.sign({ id: user.userId, roleId: user.roleId }, 'secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.userId, roleId: user.roleId }, process.env.SECRETORPRIVATEKEY, { expiresIn: '1h' });
 
     res.status(200).json({ 
       token,

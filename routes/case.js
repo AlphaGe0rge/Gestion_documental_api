@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const { createCase, getAllCases, updateCase, deleteCase, updateStatusCase } = require('../controllers/case');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 // router.post('/', authMiddleware, caseController.createCase);
 // router.get('/', authMiddleware, caseController.getAllCases);
 // router.get('/:id', authMiddleware, caseController.getCaseById);
 // router.put('/:id', authMiddleware, roleMiddleware(['abogado']), caseController.updateCase);
 // router.delete('/:id', authMiddleware, roleMiddleware(['abogado']), caseController.deleteCase);
+router.use(validarJWT);
+
 
 router.post('/', createCase);
 router.post('/casesGet', getAllCases);
